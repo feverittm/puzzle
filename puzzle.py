@@ -61,6 +61,7 @@ def valid_moves():
 choose which move we want to use for this round
 """
 def choose_move():
+    print ("Moves: ", valid)
     l=len(valid)-1
     s=random.randint(0,l)
     print ("Length: ",l,", Selector: ",s)
@@ -69,6 +70,8 @@ def choose_move():
     if move[0] != 1 and move[1] != 0:
         print("Bad Move Specified", move)
         return False
+    puzzle[move[0]] = 0
+    puzzle[move[1]] = 1
     return False
 
 #####################################################################
@@ -88,6 +91,7 @@ while valid_moves():
     if loops > 10:
         print ("Solver Loops Exceeded")
         break
+    print_puzzle()
 
 if not solved():
     print ("Puzzle not solved and no valid moves left.")

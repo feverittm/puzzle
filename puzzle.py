@@ -7,6 +7,9 @@ puzzle = [  0,
          1,1,1,1,
         1,1,1,1,1]
 
+"""
+initialize the puzzle with the open spot at the top of the puzzle
+"""
 def init_puzzle():
     puzzle[::] = [
             0,
@@ -15,6 +18,9 @@ def init_puzzle():
          1,1,1,1,
         1,1,1,1,1]
 
+"""
+print out the puzzle list formatted more like how the game looks.
+"""
 def print_puzzle():
     print("puzzle =",puzzle)
     print("     ",puzzle[0])
@@ -51,18 +57,26 @@ def valid_moves():
                 valid.append(t)
     return valid
 
+"""
+choose which move we want to use for this round
+"""
 def choose_move():
     l=len(valid)-1
     s=random.randint(0,l)
     print ("Length: ",l,", Selector: ",s)
     move = valid[s]
     print ("Move ",move)
+    if move[0] != 1 and move[1] != 0:
+        print("Bad Move Specified", move)
+        return False
     return False
 
+#####################################################################
+#  Start solver...
+#####################################################################
 init_puzzle()
 print_puzzle()
 print ("Solved? ", solved())
-print (valid_moves())
 loops = 0
 while valid_moves():
     loops = loops + 1

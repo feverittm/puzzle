@@ -1,9 +1,9 @@
 # puzzle
 
-My wife and I stop by the "Cracker Barrel" restaurant every once in a while.  This past time I was playing with the little golf tee puzzle that was sitting on the table (as I have done in the past) and I started to think about creating a script to solve the puzzle.   Here is a little verbose, but fairly simple, solution to that problem.
+My wife and I stop by the "Cracker Barrel" restaurant every once in a while.  This past time I was playing with the little golf tee puzzle that was sitting on the table (as I have done in the past) and I started to think about creating a script to solve the puzzle.   Here is a little verbose, but fairly simple, solution to that problem.  The algorithm just looks at the puzzle, creates a list of all of the valid moves, and the randomly picks one to use next.  This random walk solution takes a bit to complete, but it works.  
 
-I need to figure out a better way to check for valid moves.  I had to enumerate all possible moves instead of using some algorithm.  I messed up here.  I forgot that a valid move must jump over another peg, so I need to check if that peg exists before I make it a valid move.
+I want to work on a more intelligent breadth first search that essentials creates a tree of all valid moves.  This isn't entirely corrent since to create this graph would take quite a bit of time.  I am actually going to first use a modified random walk method;  the first pass will be random, in the second pass if the first one selected one path then select the other on this time.  In this way I will build the full tree traversing the solutions.
 
-I probably should create a list that has the start, end and itermediate nodes of all moves: (a, b, c)
+I need to figure out a better way to check for valid moves.  I had to enumerate all possible moves instead of using some algorithm.  I messed up here.  I forgot that a valid move must jump over another peg, so I need to check if that peg exists before I make it a valid move.  I fixed this issue with a list of valid moves.  I created a list that has the start, end and itermediate nodes of all moves: (a, b, c).  This method works quite a bit better.  It still needs a big initializer at the beginning to enumerate all the moves, but it only has to be done once, instead of two big if loops.
 
-I still need to create a better move routing.  It doesn't work right now because it doesn't remove the peg you jump over.  Right now this might be another long enumerate list (which I really hate to do).
+I got the script to work!  The random chooser for picking a valid move is really dumb and I should clean up a breadth first search algorithm to choose a better path to the solution.  It take quite a number of cycles to find the solution.

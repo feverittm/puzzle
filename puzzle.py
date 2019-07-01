@@ -7,6 +7,42 @@ puzzle = [  0,
          1,1,1,1,
         1,1,1,1,1]
 
+moves = [ (0, 3, 1),
+        (0, 5, 2),
+        (1, 6, 3),
+        (1, 8, 4),
+        (2, 9, 5),
+        (2, 7, 4),
+        (3, 0, 1),
+        (3, 10, 6),
+        (3, 12, 7),
+        (4, 11, 7),
+        (4, 13, 8),
+        (5, 0, 2),
+        (5, 12, 8),
+        (5, 14, 9),
+        (6, 1, 3),
+        (6, 8, 7),
+        (7, 2, 4),
+        (7, 9, 8),
+        (8, 1, 4),
+        (8, 6, 7),
+        (9, 2, 5),
+        (9, 7, 8),
+        (10, 3, 6),
+        (10, 12, 11),
+        (11, 4, 7),
+        (11, 13, 12),
+        (12, 3, 7),
+        (12, 10, 11),
+        (12, 5, 8),
+        (12, 14, 13),
+        (13, 4, 8),
+        (13, 11, 12),
+        (14, 5, 9),
+        (14, 12, 13)
+    ]
+
 """
 initialize the puzzle with the open spot at the top of the puzzle
 """
@@ -88,9 +124,81 @@ def valid_moves():
 choose which move we want to use for this round
 """
 def domove(t):
-    puzzle[t[0]] = 0
-    puzzle[t[1]] = 1
+    a = t[0]
+    b = t[1]
+    puzzle[a] = 0
+    puzzle[b] = 1
+    if a == 0 and b == 3:
+        c=1
+    if a == 0 and b == 5:
+        c=2
+    if a == 1 and b == 6:
+        c=3
+    if a == 1 and b == 8:
+        c=4
+    if a == 2 and b == 9:
+        c=5
+    if a == 2 and b == 7:
+        c=4
+    if a == 3 and b == 0:
+        c=1
+    if a == 3 and b == 10:
+        c=6
+    if a == 3 and b == 12:
+        c=7
+    if a == 4 and b == 11:
+        c=7
+    if a == 4 and b == 13:
+        c=8
+    if a == 5 and b == 0:
+        c=2
+    if a == 5 and b == 12:
+        c=8
+    if a == 5 and b == 14:
+        c=9
+    if a == 6 and b == 1:
+        c=3
+    if a == 6 and b == 8:
+        c=7
+    if a == 7 and b == 2:
+        c=4
+    if a == 7 and b == 9:
+        c=8
+    if a == 8 and b == 1:
+        c=4
+    if a == 8 and b == 6:
+        c=7
+    if a == 9 and b == 2:
+        c=5
+    if a == 9 and b == 7:
+        c=8
+    if a == 10 and b == 3:
+        c=6
+    if a == 10 and b == 12:
+        c=11
+    if a == 11 and b == 4:
+        c=7
+    if a == 11 and b == 13:
+        c=12
+    if a == 12 and b == 3:
+        c=7
+    if a == 12 and b == 10:
+        c=11
+    if a == 12 and b == 5:
+        c=8
+    if a == 12 and b == 14:
+        c=13
+    if a == 13 and b == 4:
+        c=8
+    if a == 13 and b == 11:
+        c=12
+    if a == 14 and b == 5:
+        c=9
+    if a == 14 and b == 12:
+        c=13
 
+    puzzle[c] = 0
+    
 def choose_move():
     print ("Moves: ", valid)
     l=len(valid)-1

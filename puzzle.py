@@ -40,26 +40,57 @@ the start and then end of the valid move.  If this list is empty then
 there are no more valid moves.
 """
 valid = []
+def addmove(a,b):
+    t = tuple()
+    if puzzle[a] == 1 and puzzle[b] == 0:
+        t = a,b
+        valid.append(t)
+
 def valid_moves():
     # first set should be [(3,0),(5,0)]
     del valid[::]
-    t= tuple()
-    for x in range(15):
-        # up-right move
-        if x<11:
-            if puzzle[x+3] == 1 and puzzle[x] == 0:
-                t = x+3,x
-                valid.append(t)
-        # up-left move
-        if x<9:
-            if puzzle[x+5] == 1 and puzzle[x] == 0:
-                t = x+5,x
-                valid.append(t)
+    addmove(0,3)
+    addmove(1,6)
+    addmove(1,8)
+    addmove(2,7)
+    addmove(2,9)
+    addmove(3,0)
+    addmove(3,10)
+    addmove(3,12)
+    addmove(4,11)
+    addmove(4,13)
+    addmove(5,0)
+    addmove(5,12)
+    addmove(5,14)
+    addmove(6,1)
+    addmove(6,8)
+    addmove(7,2)
+    addmove(7,9)
+    addmove(8,1)
+    addmove(8,6)
+    addmove(9,2)
+    addmove(9,7)
+    addmove(10,3)
+    addmove(10,12)
+    addmove(11,4)
+    addmove(11,13)
+    addmove(12,3)
+    addmove(12,5)
+    addmove(12,10)
+    addmove(12,14)
+    addmove(13,4)
+    addmove(13,11)
+    addmove(14,12)
+    addmove(14,5)
     return valid
 
 """
 choose which move we want to use for this round
 """
+def domove(t):
+    puzzle[t[0]] = 0
+    puzzle[t[1]] = 1
+
 def choose_move():
     print ("Moves: ", valid)
     l=len(valid)-1
@@ -70,8 +101,7 @@ def choose_move():
     if move[0] != 1 and move[1] != 0:
         print("Bad Move Specified", move)
         return False
-    puzzle[move[0]] = 0
-    puzzle[move[1]] = 1
+    domove(move)
     return False
 
 #####################################################################

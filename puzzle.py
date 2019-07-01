@@ -1,5 +1,5 @@
 import random
-random.seed(10)
+#random.seed(10)
 
 puzzle = [  0,
            1,1,
@@ -43,6 +43,8 @@ moves = [ (0, 3, 1),
         (14, 12, 13)
     ]
 
+solution = []
+
 """
 initialize the puzzle with the open spot at the top of the puzzle
 """
@@ -76,161 +78,82 @@ the start and then end of the valid move.  If this list is empty then
 there are no more valid moves.
 """
 valid = []
-def addmove(a,b):
+def addmove(v):
+    a = v[0]
+    b = v[1]
+    c = v[2]
     t = tuple()
-    if puzzle[a] == 1 and puzzle[b] == 0:
-        t = a,b
+    if puzzle[a] == 1 and puzzle[b] == 0 and puzzle[c] == 1:
+        t = a,b,c
         valid.append(t)
 
 def valid_moves():
-    # first set should be [(3,0),(5,0)]
+    # first set should be [(3,0,1),(5,0,2)]
     del valid[::]
-    addmove(0,3)
-    addmove(1,6)
-    addmove(1,8)
-    addmove(2,7)
-    addmove(2,9)
-    addmove(3,0)
-    addmove(3,10)
-    addmove(3,12)
-    addmove(4,11)
-    addmove(4,13)
-    addmove(5,0)
-    addmove(5,12)
-    addmove(5,14)
-    addmove(6,1)
-    addmove(6,8)
-    addmove(7,2)
-    addmove(7,9)
-    addmove(8,1)
-    addmove(8,6)
-    addmove(9,2)
-    addmove(9,7)
-    addmove(10,3)
-    addmove(10,12)
-    addmove(11,4)
-    addmove(11,13)
-    addmove(12,3)
-    addmove(12,5)
-    addmove(12,10)
-    addmove(12,14)
-    addmove(13,4)
-    addmove(13,11)
-    addmove(14,12)
-    addmove(14,5)
+    for t in moves:
+        addmove(t)
     return valid
 
 """
 choose which move we want to use for this round
 """
 def domove(t):
+    solution.append(t)
     a = t[0]
     b = t[1]
-    puzzle[a] = 0
-    puzzle[b] = 1
-    if a == 0 and b == 3:
-        c=1
-    if a == 0 and b == 5:
-        c=2
-    if a == 1 and b == 6:
-        c=3
-    if a == 1 and b == 8:
-        c=4
-    if a == 2 and b == 9:
-        c=5
-    if a == 2 and b == 7:
-        c=4
-    if a == 3 and b == 0:
-        c=1
-    if a == 3 and b == 10:
-        c=6
-    if a == 3 and b == 12:
-        c=7
-    if a == 4 and b == 11:
-        c=7
-    if a == 4 and b == 13:
-        c=8
-    if a == 5 and b == 0:
-        c=2
-    if a == 5 and b == 12:
-        c=8
-    if a == 5 and b == 14:
-        c=9
-    if a == 6 and b == 1:
-        c=3
-    if a == 6 and b == 8:
-        c=7
-    if a == 7 and b == 2:
-        c=4
-    if a == 7 and b == 9:
-        c=8
-    if a == 8 and b == 1:
-        c=4
-    if a == 8 and b == 6:
-        c=7
-    if a == 9 and b == 2:
-        c=5
-    if a == 9 and b == 7:
-        c=8
-    if a == 10 and b == 3:
-        c=6
-    if a == 10 and b == 12:
-        c=11
-    if a == 11 and b == 4:
-        c=7
-    if a == 11 and b == 13:
-        c=12
-    if a == 12 and b == 3:
-        c=7
-    if a == 12 and b == 10:
-        c=11
-    if a == 12 and b == 5:
-        c=8
-    if a == 12 and b == 14:
-        c=13
-    if a == 13 and b == 4:
-        c=8
-    if a == 13 and b == 11:
-        c=12
-    if a == 14 and b == 5:
-        c=9
-    if a == 14 and b == 12:
-        c=13
-
-    puzzle[c] = 0
+    c = t[2]
+    puzzle[a] = 0 # start node of move
+    puzzle[b] = 1 # end node of move
+    puzzle[c] = 0 # intermediate node
     
 def choose_move():
-    print ("Moves: ", valid)
+    #print ("Moves: ", valid)
     l=len(valid)-1
     s=random.randint(0,l)
-    print ("Length: ",l,", Selector: ",s)
+    #print ("Length: ",l,", Selector: ",s)
     move = valid[s]
-    print ("Move ",move)
-    if move[0] != 1 and move[1] != 0:
-        print("Bad Move Specified", move)
-        return False
-    domove(move)
+    #print ("Move ",move)
+    if (puzzle[move[0]] == 1 or puzzle[move[1]] == 0 or puzzle[move[2]] == 1):
+        domove(move)     
+        return True
+    print("Bad Move Specified", move)
+    print("   ", move[0], " = ", puzzle[move[0]])
+    print("   ",move[1], " = ", puzzle[move[1]])
+    print("   ",move[2], " = ", puzzle[move[2]])
     return False
+
+def run_puzzle():
+    init_puzzle()
+    del solution[::]
+    #print_puzzle()
+    #print ("Solved? ", solved())
+    loops = 0
+    while valid_moves():
+        loops = loops + 1
+        #print ("Loop: ", loops)
+        choose_move()
+        if solved():
+            print ("Puzzle solved in ",len(solution),"moves!")
+            print ("Solution: ", solution)
+            print_puzzle()
+            break
+        if loops > 20:
+            print ("Solver Loops Exceeded")
+            break
+        #print_puzzle()
+
+    if not solved():
+        print ("Puzzle not solved in ",loops, " loops and no valid moves left.")
+        print (sum(puzzle)," Pegs left on the puzzle.")
+        print_puzzle()
+    return sum(puzzle)
 
 #####################################################################
 #  Start solver...
 #####################################################################
 init_puzzle()
-print_puzzle()
-print ("Solved? ", solved())
-loops = 0
-while valid_moves():
-    loops = loops + 1
-    print ("Loop: ", loops)
-    choose_move()
-    if solved():
-        print ("Puzzle solved!")
-        break
-    if loops > 10:
-        print ("Solver Loops Exceeded")
-        break
-    print_puzzle()
-
-if not solved():
-    print ("Puzzle not solved and no valid moves left.")
-print_puzzle()
+main_loop = 1
+solution = []
+while run_puzzle() > 1 and main_loop < 50:
+    print ("Trial #", main_loop)
+    main_loop = main_loop+1

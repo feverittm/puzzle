@@ -1,4 +1,5 @@
 # puzzle
+Floyd Moore - July 1, 2019
 
 My wife and I stop by the "Cracker Barrel" restaurant every once in a while.  This past time I was playing with the little golf tee puzzle that was sitting on the table (as I have done in the past) and I started to think about creating a script to solve the puzzle.   Here is a little verbose, but fairly simple, solution to that problem.  The algorithm just looks at the puzzle, creates a list of all of the valid moves, and the randomly picks one to use next.  This random walk solution takes a bit to complete, but it works.  
 
